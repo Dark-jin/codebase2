@@ -26,12 +26,14 @@ dotenv.config();
 module.exports = {
   entry: {
     // 번들 파일(bundle)의 시작 파일(Entry)을 jsx에서 tsx로 변경
-    "js/app": ["./src/index.tsx"],
+    app: "./src/index.tsx",
   },
   output: {
-    path: path.resolve(__dirname, "dist/"),
+    path: path.join(__dirname, "/dist"),
     publicPath: "/",
     filename: "build.[chunkhash].js",
+    clean : true, // 빌드 이전 결과물 제거
+    assetModuleFilename: "assets/[name][ext]", // asset 폴더에 있던 파일들은 dist 내부에 asset 폴더 생성후 이름과 확장자를 그대로 사용하여 저장
   },
   resolve: {
     plugins: [new TsConfigPathsPlugin()],
@@ -69,9 +71,9 @@ module.exports = {
   // proxy 설정
   devServer: {
     historyApiFallback: true,
-    proxy: {
-      "/api": "http://localhost:5000",
-    },
+    // proxy: {
+    //   "/api": "http://localhost:5000",
+    // },
     port : 3000,
   },
   // uglify
